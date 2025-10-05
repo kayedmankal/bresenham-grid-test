@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "./App.module.css"; // CSS Module
 
 function App() {
-    const size = 8;
 
+    const size = 16;
+
+    const [points, setPoints] = useState([]);
+    const [preview, setPreview] = useState([]);
     const [grid, setGrid] = useState(
         Array.from({ length: size }, () => Array(size).fill(false))
     );
-
-    const [points, setPoints] = useState([]);
 
     useEffect(() => {
         if (points.length === 2) {
@@ -30,6 +31,16 @@ function App() {
             if (prev.length === 2) return [[row, col]];
             return [...prev, [row, col]];
         });
+        setPreview([]);
+    };
+
+    const handleHover = (row, col) => {
+        if (points.length === 1) {
+            const preview = getLinePoints(points[0], [row, col]);
+            setPreview(preview);
+        } else {
+            setPreview([]);
+        }
     };
 
     return (
@@ -40,11 +51,18 @@ function App() {
                         <label
                             key={`${i}-${j}`}
                             className={styles.cell}
-                            style={{ backgroundColor: col ? "#D3D3D3" : "#aaaaaa" }}
+                            style={{
+                                backgroundColor: grid[i][j]
+                                    ? "#D3D3D3"
+                                    : preview.some(([r, c]) => r === i && c === j)
+                                        ? "#D3D3D3"
+                                        : "#aaaaaa",
+                            }}
+                            onMouseEnter={() => handleHover(i, j)}
                         >
                             <input
                                 type="checkbox"
-                                checked={col}
+                                checked={grid[i][j]}
                                 className={styles.checkbox}
                                 onChange={() => handleClick(i, j)}
                             />
