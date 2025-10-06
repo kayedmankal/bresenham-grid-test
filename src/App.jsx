@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import styles from "./App.module.css"; // CSS Module
+import styles from "./App.module.css";
+import getLinePoints from "./utils/getLinePoints.js";
 
 function App() {
     const size = 8;
@@ -79,32 +80,6 @@ function App() {
             </div>
         </div>
     );
-}
-
-function getLinePoints([x0, y0], [x1, y1]) {
-    const points = [];
-    const dx = Math.abs(x1 - x0);
-    const dy = Math.abs(y1 - y0);
-    const sx = x0 < x1 ? 1 : -1;
-    const sy = y0 < y1 ? 1 : -1;
-    let err = dx - dy;
-
-    let x = x0;
-    let y = y0;
-    while (true) {
-        points.push([x, y]);
-        if (x === x1 && y === y1) break;
-        const e2 = 2 * err;
-        if (e2 > -dy) {
-            err -= dy;
-            x += sx;
-        }
-        if (e2 < dx) {
-            err += dx;
-            y += sy;
-        }
-    }
-    return points;
 }
 
 export default App;
