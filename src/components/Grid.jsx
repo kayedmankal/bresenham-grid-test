@@ -15,16 +15,19 @@ function Grid() {
     useEffect(() => {
         if (points.length === 2) {
             const [p1, p2] = points;
-            const newGrid = grid.map(row => [...row]);
-            const cells = getLinePoints(p1, p2);
-            cells.forEach(([r, c]) => {
-                newGrid[r][c] = true;
+            setGrid(prevGrid => {
+                const newGrid = prevGrid.map(row => [...row]);
+                const cells = getLinePoints(p1, p2);
+                cells.forEach(([r, c]) => {
+                    newGrid[r][c] = true;
+                });
+                return newGrid;
             });
-            setGrid(newGrid);
             setPoints([]);
             setPreview([]);
         }
     }, [points]);
+
 
     const handleClick = (row, col) => {
         setPoints(prev => {
