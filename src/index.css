@@ -1,8 +1,7 @@
 html, body, #root {
     height: 100%;
-    margin: 0;
-    font-family: "Inter Semi Bold", sans-serif;
     margin: 10px;
+    font-family: "Inter Semi Bold", sans-serif;
 }
 
 body {
