@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import styles from "../styles/App.module.css";
 import getLinePoints from "../utils/getLinePoints.js";
 
 function Grid() {
+
     const size = 8;
-
     const [grid, setGrid] = useState(
-        Array.from({ length: size }, () => Array(size).fill(false))
+        Array.from({length: size}, () => Array(size).fill(false))
     );
-
     const [points, setPoints] = useState([]);
     const [preview, setPreview] = useState([]);
 
@@ -54,31 +53,27 @@ function Grid() {
         <div className={styles.wrapper}>
             <div className={styles.grid}>
                 {grid.map((row, i) =>
-                    row.map((col, j) => {
-                        const filled = col;
-                        const previewed = isPreviewed(i, j);
-                        const color = filled
-                            ? "#cccccc"
-                            : previewed
-                                ? "#dcdcdc"
-                                : "#aaaaaa";
-
-                        return (
-                            <label
-                                key={`${i}-${j}`}
-                                className={styles.cell}
-                                style={{ backgroundColor: color }}
-                                onMouseEnter={() => handleHover(i, j)}
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={filled}
-                                    className={styles.checkbox}
-                                    onChange={() => handleClick(i, j)}
-                                />
-                            </label>
-                        );
-                    })
+                    row.map((col, j) => (
+                        <label
+                            key={`${i}-${j}`}
+                            className={styles.cell}
+                            style={{
+                                backgroundColor: col
+                                    ? "#cccccc"
+                                    : isPreviewed(i, j)
+                                        ? "#dcdcdc"
+                                        : "#aaaaaa"
+                            }}
+                            onMouseEnter={() => handleHover(i, j)}
+                        >
+                            <input
+                                type="checkbox"
+                                checked={col}
+                                className={styles.checkbox}
+                                onChange={() => handleClick(i, j)}
+                            />
+                        </label>
+                    ))
                 )}
             </div>
         </div>
